@@ -1,6 +1,8 @@
 FROM ubuntu:12.04
 ENV MYSQLTMPROOT temprootpass
 
+ENV DEBIAN_FRONTEND noninteractive
+
 # Run upgrades
 RUN echo deb http://us.archive.ubuntu.com/ubuntu/ precise universe multiverse >> /etc/apt/sources.list;\
   echo deb http://us.archive.ubuntu.com/ubuntu/ precise-updates main restricted universe >> /etc/apt/sources.list;\
