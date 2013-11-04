@@ -21,16 +21,14 @@ RUN add-apt-repository -y ppa:git-core/ppa;\
   apt-get update;\
   apt-get -y install git
 
-# Install Ruby
-RUN mkdir /tmp/ruby;\
-  cd /tmp/ruby;\
-  curl ftp://ftp.ruby-lang.org/pub/ruby/2.0/ruby-2.0.0-p247.tar.gz | tar xz;\
-  cd ruby-2.0.0-p247;\
-  chmod +x configure;\
-  ./configure;\
-  make;\
-  make install;\
-  gem install bundler --no-ri --no-rdoc
+# Install Ruby via ruby-install
+RUN wget -O /tmp/ruby-install-0.3.1.tar.gz https://github.com/postmodern/ruby-install/archive/v0.3.1.tar.gz
+RUN tar -xzvf /tmp/ruby-install-0.3.1.tar.gz -C /opt
+RUN /opt/ruby-install-0.3.1/bin/ruby-install -i /usr/local/ ruby 2.0.0
+RUN rm /tmp/ruby-install-0.3.1.tar.gz
+ 
+# Install bundler
+RUN gem install bundler --no-ri --no-rdoc
 
 # Create Git user
 RUN adduser --disabled-login --gecos 'GitLab' git
